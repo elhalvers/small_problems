@@ -40,8 +40,8 @@ positive:
 600-1439 no prefix
 1440 resets to 0 (hour = "00")
 
-negative
--
+negative:
+
 
     
 
@@ -53,22 +53,21 @@ def time_of_day(num)
   when num == 0
     return "00:00"
 
-  when num > 0 && num < 60
+  when (1..59).include?(num) 
     return ("00:" + num.to_s)
-  end
 
-  when num > 1440
-    
-    hour = num / 60
-    min = num % 60
-    return "0" + hour.to_s + ':' + min.to_s
-  elsif num > 600 && num < 1440
-    return "#{num / 60 }:#{num % 60 }"
+  when (60..599).include?(num)
+
+
+  when (600..1439).include?(num)
+    hours, minutes = num.divmod(60)
+    return "#{hours}:#{minutes}"
   end
 end
 
 puts time_of_day(0) == "00:00"
 puts time_of_day(35) == "00:35"
+puts time_of_day(65) == "01:05"
 puts time_of_day(3000) == "02:00"
 puts time_of_day(800) == "13:20"
 puts time_of_day(-4231) == "01:29"
